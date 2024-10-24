@@ -34,4 +34,8 @@ public class InputManager : MonoBehaviour
     public Vector2 GetPlayerMovement() {
         return playerControls.Player.Movement.ReadValue<Vector2>();   
     }
+
+    public bool GetPlayerPressedEquip() {
+        return playerControls.Player.Equip.triggered;
+    }
 }
