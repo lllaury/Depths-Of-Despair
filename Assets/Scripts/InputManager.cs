@@ -39,6 +39,11 @@ public class InputManager : MonoBehaviour
         return playerControls.Player.Equip.triggered;
     }
 
+    public bool GetPlayerPressedDrop()
+    {
+        return playerControls.Player.Drop.triggered;
+    }
+
     public bool GetPressedInteract() {
         return playerControls.Player.Interact.triggered;
     }

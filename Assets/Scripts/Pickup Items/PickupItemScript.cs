@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PickupItemScript : MonoBehaviour
 {
-    [SerializeField] PickupObject pickup;
-    [SerializeField] bool isDropped = false;
+    [SerializeField] private PickupObject pickup;
+    [SerializeField] private bool isDropped = false;
     private InputManager inputManager;
     private PlayerStats playerStats;
 
@@ -24,5 +24,14 @@ public class PickupItemScript : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    public void DropItem() {
+        // Unequip current item
+        Vector3 pos = transform.position;
+
+        // Spawn the droped version of the item
+        GameObject obj = Instantiate(pickup.droppedItem);
+        obj.transform.position = pos;
     }
 }

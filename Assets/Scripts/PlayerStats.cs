@@ -83,5 +83,11 @@ public class PlayerStats : MonoBehaviour
             }
 
         }
+
+        if (inputManager.GetPlayerPressedDrop() && equippedItem != null) {
+            // Unequip current item
+            equippedItem.GetComponent<PickupItemScript>().DropItem();
+            Destroy(equippedItem);
+        }
     }
 }
