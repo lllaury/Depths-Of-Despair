@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
     private CharacterController controller;
     [SerializeField] private CinemachineCamera fpCam;
-    private Vector3 playerVelocity;
     [SerializeField] private float playerSpeed = 2f;
     private InputManager inputManager;
 

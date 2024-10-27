@@ -38,4 +38,8 @@ public class InputManager : MonoBehaviour
     public bool GetPlayerPressedEquip() {
         return playerControls.Player.Equip.triggered;
     }
+
+    public bool GetPressedInteract() {
+        return playerControls.Player.Interact.triggered;
+    }
 }
