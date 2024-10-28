@@ -18,15 +18,21 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public void SetEquippedItem(GameObject newItem) {
-        if (equippedItem != null) Destroy(equippedItem);
+    public void SetEquippedItem(GameObject newItem)
+    {
+        if (equippedItem != null) {
+            // Unequip current item
+            PickupItemScript pis = equippedItem.GetComponent<PickupItemScript>();
+            print("Is pis null: " + (pis == null));
+            pis.DropItem();
+            Destroy(equippedItem);
+        }
 
         GameObject obj = Instantiate(newItem);
         equippedItem = obj;
         equippedItem.transform.parent = gameObject.transform;
         equippedItem.transform.localPosition = new Vector3(0.45f, 0.35f, 0.72f);
         pickupText.enabled = false;
-
     }
 
     // Start is called before the first frame update
@@ -43,9 +49,6 @@ public class PlayerStats : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("Hitting some trigger.");
-        print(other.gameObject.tag);
-
         if (other.gameObject.CompareTag("PickupItem"))
         {
             // Display the text
