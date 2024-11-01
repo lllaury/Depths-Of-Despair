@@ -5,25 +5,31 @@ using UnityEngine;
 public class PickupItemScript : MonoBehaviour
 {
     [SerializeField] private PickupObject pickup;
-    [SerializeField] private bool isDropped = false;
-    private InputManager inputManager;
-    private PlayerStats playerStats;
+    //[SerializeField] private bool isDropped = false;
+    //private InputManager inputManager;
+    //private PlayerStats playerStats;
 
     // Start is called before the first frame update
     void Start()
     {
-        inputManager = InputManager.Instance;
-        playerStats = PlayerStats.Instance;
+        //inputManager = InputManager.Instance;
+        //playerStats = PlayerStats.Instance;
     }
 
     private void OnTriggerStay(Collider other)
     {
+        /**
         if (other.gameObject.CompareTag("Player")) {
             if (inputManager.GetPlayerPressedEquip()) {
                 playerStats.SetEquippedItem(isDropped ? pickup.equippedItem : pickup.droppedItem);
                 Destroy(gameObject);
             }
         }
+        */
+    }
+
+    public GameObject GetEquippedVersion() {
+        return pickup.equippedItem;
     }
 
     public void DropItem() {

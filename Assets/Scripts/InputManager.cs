@@ -5,37 +5,49 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     private static InputManager _instance;
+    private bool wasInteractPressedLastFrame = false; // Not serialized as it doesn’t need to be set in the Inspector
 
-    public static InputManager Instance {
-        get {
-            return _instance;
-        }
+    public static InputManager Instance
+    {
+        get { return _instance; }
     }
 
     private PlayerControls playerControls;
 
-    // Start is called before the first frame update
-    void Awake()
+    // Initialize PlayerControls in Awake
+    private void Awake()
     {
-        if (_instance != null && _instance != this) Destroy(this.gameObject);
-        else _instance = this;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject); // Keeps the instance alive across scenes
 
-        playerControls = new PlayerControls();
+            playerControls = new PlayerControls();
+            playerControls.Enable();
+        }
     }
 
-    private void OnEnable() {
-        playerControls.Enable();
+    private void OnEnable()
+    {
+        playerControls?.Enable(); // Ensure playerControls is not null
     }
+
     private void OnDisable()
     {
-        playerControls.Disable();
+        playerControls?.Disable(); // Ensure playerControls is not null
     }
 
-    public Vector2 GetPlayerMovement() {
-        return playerControls.Player.Movement.ReadValue<Vector2>();   
+    public Vector2 GetPlayerMovement()
+    {
+        return playerControls.Player.Movement.ReadValue<Vector2>();
     }
 
-    public bool GetPlayerPressedEquip() {
+    public bool GetPlayerPressedEquip()
+    {
         return playerControls.Player.Equip.triggered;
     }
 
@@ -44,7 +56,28 @@ public class InputManager : MonoBehaviour
         return playerControls.Player.Drop.triggered;
     }
 
-    public bool GetPressedInteract() {
+    public bool GetPressedInteract()
+    {
+        if (playerControls.Player.Interact.triggered) Debug.Log("Interact was pressed");
         return playerControls.Player.Interact.triggered;
+    }
+
+    public bool GetReleasedInteract()
+    {
+        bool isInteractPressed = playerControls.Player.Interact.ReadValue<float>() > 0f;
+        bool isReleased = !isInteractPressed && wasInteractPressedLastFrame;
+        if (isReleased) Debug.Log("Interact was released");
+        return isReleased;
+    }
+
+    public bool GetHoldingInteract()
+    {
+        return playerControls.Player.Interact.ReadValue<float>() > 0f;
+    }
+
+    private void LateUpdate()
+    {
+        // Update the state of the interact button to check for released state in the next frame
+        wasInteractPressedLastFrame = playerControls.Player.Interact.ReadValue<float>() > 0f;
     }
 }

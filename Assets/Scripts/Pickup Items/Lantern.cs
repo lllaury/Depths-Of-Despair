@@ -31,10 +31,4 @@ public class Lantern : MonoBehaviour, IInteractableItem
         lanternOn = !lanternOn;
         UseItem();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
