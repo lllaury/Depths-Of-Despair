@@ -75,6 +75,9 @@ public class InputManager : MonoBehaviour
         return playerControls.Player.Interact.ReadValue<float>() > 0f;
     }
 
+    public bool GetHoldingSprint() {
+        return playerControls.Player.Sprint.ReadValue<float>() > 0f;
+    }
     private void LateUpdate()
     {
         // Update the state of the interact button to check for released state in the next frame
